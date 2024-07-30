@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import NavbarSearch from "./NavbarSearch";
 import NavbarDropdown from "./NavbarDropdown";
 
-const Navbar = ({ onClick }) => {
+const Navbar = ({ onCategoryChange, onSearch }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -41,10 +41,13 @@ const Navbar = ({ onClick }) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <NavbarDropdown categories={categories} onClick={onClick}>
+          <NavbarDropdown
+            categories={categories}
+            onCategoryChange={onCategoryChange}
+          >
             Categories
           </NavbarDropdown>
-          <NavbarSearch />
+          <NavbarSearch onSearch={onSearch} />
         </div>
       </div>
     </nav>

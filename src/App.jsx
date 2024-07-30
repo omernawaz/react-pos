@@ -5,13 +5,20 @@ import { useState } from "react";
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterText, setFilterText] = useState("");
-  function handleClick(category) {
+
+  function handleCategoryChange(category) {
+    setFilterText("");
     setSelectedCategory(category);
+  }
+
+  function handleSearch(formData) {
+    const query = formData.get("query");
+    setFilterText(query);
   }
 
   return (
     <div>
-      <Navbar onClick={handleClick} onFilter={setFilterText} />
+      <Navbar onCategoryChange={handleCategoryChange} onSearch={handleSearch} />
       <ProductsDisplay category={selectedCategory} filterText={filterText} />
     </div>
   );
