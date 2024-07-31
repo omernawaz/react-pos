@@ -1,4 +1,4 @@
-const NavbarLink = ({ category, onClick, children }) => {
+const DropdownLink = ({ category, onClick, children }) => {
   return (
     <li>
       <a className="dropdown-item" href="#" onClick={() => onClick(category)}>
@@ -8,4 +8,4 @@ const NavbarLink = ({ category, onClick, children }) => {
   );
 };
 
-export default NavbarLink;
+export default DropdownLink;

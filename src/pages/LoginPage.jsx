@@ -1,8 +1,11 @@
 import { useState } from "react";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/auth/LoginForm";
+import useUserSession from "../hooks/useUserSession";
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
   const [showError, setShowError] = useState(false);
+  const [handleLogin] = useUserSession();
+
   function handleSubmit(formData) {
     let headers = new Headers();
     headers.set("Content-Type", "application/json");
@@ -16,9 +19,13 @@ const LoginPage = ({ onLogin }) => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => onLogin(json.token))
-      .catch(() => setShowError(true));
+      .then((json) => handleLogin(json.token))
+      .catch((error) => {
+        console.log(error);
+        setShowError(true);
+      });
   }
+
   return (
     <div className="card p-4 m-4 position-absolute top-50 start-50 translate-middle w-50">
       <h2 className="text-center">Login to FakeStore POS</h2>
