@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import LoadingCard from "./LoadingCard";
 
 const ProductsDisplay = ({ category, filterText }) => {
   const [products, setProducts] = useState([]);
@@ -26,16 +27,20 @@ const ProductsDisplay = ({ category, filterText }) => {
     }
   }
 
+  console.log(products);
   return (
     <div className="container">
       <h1 className="text-center">
         {category[0].toUpperCase() + category.substr(1) + " Products"}
       </h1>
       <div className="d-flex flex-row flex-wrap">
-        {products &&
+        {products.length > 0 ? (
           filteredProducts.map((product, index) => (
             <ProductCard key={index} product={product} />
-          ))}
+          ))
+        ) : (
+          <LoadingCard />
+        )}
       </div>
     </div>
   );

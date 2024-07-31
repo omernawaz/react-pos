@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
+
 import NavbarSearch from "./NavbarSearch";
 import NavbarDropdown from "./NavbarDropdown";
+import NavbarBrand from "./staticComponents/NavbarBrand";
+import NavbarTogglerButton from "./staticComponents/NavbarTogglerButton";
+import NavbarUserGreeting from "./NavbarUserGreeting";
+import NavbarLogoutButton from "./staticComponents/NavbarLogoutButton";
 
-const Navbar = ({ onCategoryChange, onSearch }) => {
+const Navbar = ({ onCategoryChange, onSearch, onLogout }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -19,27 +24,14 @@ const Navbar = ({ onCategoryChange, onSearch }) => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          <img
-            src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg"
-            alt="Logo"
-            width="30"
-            height="24"
-            className="d-inline-block align-text-top me-2 ms-2"
-          />
-          Fakestore
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <NavbarBrand
+          imageSource={
+            "https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg"
+          }
+          brandName={"FakeStore POS"}
+        />
+        <NavbarTogglerButton />
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <NavbarDropdown
             categories={categories}
@@ -47,7 +39,9 @@ const Navbar = ({ onCategoryChange, onSearch }) => {
           >
             Categories
           </NavbarDropdown>
+          <NavbarUserGreeting />
           <NavbarSearch onSearch={onSearch} />
+          <NavbarLogoutButton onLogout={onLogout} />
         </div>
       </div>
     </nav>

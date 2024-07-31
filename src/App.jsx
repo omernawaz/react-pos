@@ -1,27 +1,30 @@
-import ProductsDisplay from "./components/ProductsDisplay";
-import Navbar from "./components/navbar/Navbar";
+import Home from "./components/Home";
+import LoginPage from "./components/auth/LoginPage";
+import { useCookies } from "react-cookie";
 import { useState } from "react";
 
-function App() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [filterText, setFilterText] = useState("");
+const App = () => {
+  const [cookies, setCookie, removeCookie] = useCookies("auth");
+  const [isLoggedIn, setIsLoggedIn] = useState(cookies.auth != undefined);
 
-  function handleCategoryChange(category) {
-    setFilterText("");
-    setSelectedCategory(category);
+  function handleLogin(token) {
+    setCookie("auth", token, {
+      path: "/",
+      maxAge: 24 * 60 * 60,
+      sameSite: "strict",
+    });
+    setIsLoggedIn(true);
   }
 
-  function handleSearch(formData) {
-    const query = formData.get("query");
-    setFilterText(query);
+  function handleLogout() {
+    removeCookie("auth");
+    setIsLoggedIn(false);
   }
 
-  return (
-    <div>
-      <Navbar onCategoryChange={handleCategoryChange} onSearch={handleSearch} />
-      <ProductsDisplay category={selectedCategory} filterText={filterText} />
-    </div>
-  );
-}
+  if (isLoggedIn) {
+    return <Home cookies={cookies} onLogout={handleLogout} />;
+  }
+  return <LoginPage onLogin={handleLogin} />;
+};
 
 export default App;
