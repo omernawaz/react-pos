@@ -3,6 +3,7 @@ import ProductDisplay from "../components/product-catalogue/ProductsDisplay";
 import LoadingCard from "../components/product-catalogue/LoadingCard";
 import ProductFilter from "../components/product-catalogue/ProductFilter";
 import useGetData from "../hooks/useGetData";
+import useRequireLogin from "../hooks/useRequireLogin";
 
 function filterProducts(productsArray, filterText) {
   let filteredProducts = [];
@@ -23,6 +24,7 @@ function setFetchLink(selectedCategory) {
 }
 
 const ProductCatalogue = () => {
+  useRequireLogin();
   //const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterText, setFilterText] = useState("");

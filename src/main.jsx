@@ -12,7 +12,7 @@ import Navbar from "./components/navbar/Navbar.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import ProductCatalogue from "./pages/ProductCatalogue.jsx";
 import Home from "./pages/Home.jsx";
-import CheckoutPage from "./components/checkout/CheckoutPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
