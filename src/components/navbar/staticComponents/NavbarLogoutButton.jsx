@@ -1,9 +1,13 @@
-const NavbarLogoutButton = ({ onLogout }) => {
+import useUserSession from "../../../hooks/useUserSession";
+
+const NavbarLogoutButton = () => {
+  const [, handleLogout] = useUserSession();
+
   return (
     <button
       type="button"
       className="btn btn-danger ms-3 me-3"
-      onClick={onLogout}
+      onClick={handleLogout}
     >
       Logout
     </button>
