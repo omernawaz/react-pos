@@ -1,25 +1,28 @@
 import Dropdown from "../generic/Dropdown";
 import SearchBar from "../generic/SearchBar";
-import { useEffect, useState } from "react";
+
+import useGetData from "../../hooks/useGetData";
 
 const ProductFilter = ({ onCategoryChange, onSearch }) => {
-  const [categories, setCategories] = useState([]);
+  const [categories, isLoading] = useGetData(
+    "https://fakestoreapi.com/products/categories"
+  );
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        data.push("all");
-        setCategories(data);
-      });
-  }, []);
+  if (
+    !isLoading &&
+    categories &&
+    !categories.find((element) => element === "all")
+  ) {
+    categories.push("all");
+  }
 
   return (
     <div className="container w-50">
       <div className="d-flex flex-row">
-        <Dropdown items={categories} onItemChange={onCategoryChange}>
+        <Dropdown
+          items={isLoading ? [] : categories}
+          onItemChange={onCategoryChange}
+        >
           Categories
         </Dropdown>
         <SearchBar onSearch={onSearch} />

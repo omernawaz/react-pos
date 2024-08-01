@@ -3,8 +3,6 @@ import { useCookies } from "react-cookie";
 const useUserSession = () => {
     const [, setCookie, removeCookie] = useCookies();
 
-    
-
     const handleLogin = (token) => {
         setCookie('auth', token);
         window.location.replace('./');

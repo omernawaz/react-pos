@@ -1,8 +1,10 @@
 import { useState } from "react";
 import LoginForm from "../components/auth/LoginForm";
 import useUserSession from "../hooks/useUserSession";
+import useRequireLogin from "../hooks/useRequireLogin";
 
 const LoginPage = () => {
+  useRequireLogin();
   const [showError, setShowError] = useState(false);
   const [handleLogin] = useUserSession();
 

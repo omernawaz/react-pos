@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductDisplay from "../components/product-catalogue/ProductsDisplay";
 import LoadingCard from "../components/product-catalogue/LoadingCard";
 import ProductFilter from "../components/product-catalogue/ProductFilter";
+import useGetData from "../hooks/useGetData";
 
 function filterProducts(productsArray, filterText) {
   let filteredProducts = [];
@@ -13,10 +14,32 @@ function filterProducts(productsArray, filterText) {
   return filteredProducts;
 }
 
+function setFetchLink(selectedCategory) {
+  let fetchLink = "https://fakestoreapi.com/products";
+  if (selectedCategory != "all") {
+    fetchLink += "/category/" + selectedCategory;
+  }
+  return fetchLink;
+}
+
 const ProductCatalogue = () => {
-  const [products, setProducts] = useState([]);
+  //const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterText, setFilterText] = useState("");
+
+  const [products, isLoading, error] = useGetData(
+    setFetchLink(selectedCategory)
+  );
+
+  if (error) {
+    throw new Error(error);
+  }
+
+  let filteredProducts = [];
+
+  if (!isLoading) {
+    filteredProducts = filterProducts(products, filterText);
+  }
 
   function handleCategoryChange(category) {
     setFilterText("");
@@ -27,23 +50,6 @@ const ProductCatalogue = () => {
     const query = formData.get("query");
     setFilterText(query);
   }
-
-  useEffect(() => {
-    let fetchLink = "https://fakestoreapi.com/products";
-    if (selectedCategory != "all") {
-      fetchLink += "/category/" + selectedCategory;
-    }
-
-    fetch(fetchLink)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setProducts(data);
-      });
-  }, [selectedCategory]);
-
-  let filteredProducts = filterProducts(products, filterText);
 
   return (
     <>
@@ -57,10 +63,10 @@ const ProductCatalogue = () => {
         onSearch={handleSearch}
       />
       <div className="container">
-        {filteredProducts.length > 0 ? (
-          <ProductDisplay products={filteredProducts} />
-        ) : (
+        {isLoading ? (
           <LoadingCard />
+        ) : (
+          <ProductDisplay products={filteredProducts} />
         )}
       </div>
     </>

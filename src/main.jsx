@@ -13,33 +13,41 @@ import LoginPage from "./pages/LoginPage.jsx";
 import ProductCatalogue from "./pages/ProductCatalogue.jsx";
 import Home from "./pages/Home.jsx";
 import CheckoutPage from "./components/checkout/CheckoutPage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Navbar />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <App />,
-      },
-      {
-        path: "catalogue",
-        element: <ProductCatalogue />,
-      },
-      {
-        path: "home",
-        element: <Home />,
-      },
-      {
-        path: "checkout",
-        element: <CheckoutPage />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <App />,
+          },
+          {
+            path: "catalogue",
+            element: <ProductCatalogue />,
+          },
+          {
+            path: "home",
+            element: <Home />,
+          },
+          {
+            path: "checkout",
+            element: <CheckoutPage />,
+          },
+        ],
       },
     ],
   },
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

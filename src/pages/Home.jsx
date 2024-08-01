@@ -1,11 +1,5 @@
-import ProductCatalogue from "./ProductCatalogue";
-
 function Home() {
-  return (
-    <>
-      <ProductCatalogue />
-    </>
-  );
+  return <div>Home</div>;
 }
 
 export default Home;
