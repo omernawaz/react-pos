@@ -14,6 +14,7 @@ import ProductCatalogue from "./pages/ProductCatalogue.jsx";
 import Home from "./pages/Home.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import EditProduct from "./pages/EditProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
           {
             path: "checkout",
             element: <CheckoutPage />,
+          },
+          {
+            path: "edit/:productId",
+            element: <EditProduct />,
+          },
+          {
+            path: "add",
+            element: <EditProduct />,
           },
         ],
       },

@@ -11,18 +11,13 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (!isLoading && data) {
-      console.log(data);
       handleLogin(data.token);
     }
   }, [isLoading, data]);
 
-  useEffect(() => {
-    if (error) {
-    }
-  }, [error]);
-
   return (
-    <>
+    <div className="card p-4 m-4 position-absolute top-50 start-50 translate-middle w-50">
+      <h2 className="text-center">Login to FakeStore POS</h2>
       {error != null && (
         <Alert
           alertType={"danger"}
@@ -30,11 +25,8 @@ const LoginPage = () => {
           alertMessage={error.message}
         />
       )}
-      <div className="card p-4 m-4 position-absolute top-50 start-50 translate-middle w-50">
-        <h2 className="text-center">Login to FakeStore POS</h2>
-        <LoginForm onSubmit={handleAuth} />
-      </div>
-    </>
+      <LoginForm onSubmit={handleAuth} />
+    </div>
   );
 };
 

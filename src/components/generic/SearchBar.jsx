@@ -5,16 +5,13 @@ const SearchBar = ({ onSearch }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Handling Submit: " + query);
     let formData = new FormData();
     formData.append("query", query);
     onSearch(formData);
   }
 
   function handleChange(e) {
-    console.log("Handling Change: " + e.target.value);
     setQuery(e.target.value);
-    console.log("Handling Change(Query Set To): " + query);
 
     if (e.target.value === "") {
       handleSubmit(e);

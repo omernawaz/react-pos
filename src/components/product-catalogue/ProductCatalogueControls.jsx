@@ -1,6 +1,7 @@
 import Dropdown from "../generic/Dropdown";
 import SearchBar from "../generic/SearchBar";
 import useGetData from "../../hooks/useGetData";
+import Button from "../generic/Button";
 
 const ProductCatalogueControls = ({ onCategoryChange, onSearch }) => {
   const [categories, isLoading] = useGetData(
@@ -25,6 +26,13 @@ const ProductCatalogueControls = ({ onCategoryChange, onSearch }) => {
           Categories
         </Dropdown>
         <SearchBar onSearch={onSearch} />
+
+        <Button
+          buttonType={"success"}
+          onClick={() => window.location.replace("./add")}
+        >
+          New Product +
+        </Button>
       </div>
     </div>
   );

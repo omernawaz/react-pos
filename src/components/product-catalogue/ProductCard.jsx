@@ -1,4 +1,4 @@
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, productId }) => {
   const truncatedDiscription = product.description.substr(0, 100) + "...";
 
   return (
@@ -23,7 +23,11 @@ const ProductCard = ({ product }) => {
       </ul>
 
       <div className="card-body text-center">
-        <a href="#" className="card-link" style={{ color: "orange" }}>
+        <a
+          href={"./edit/" + productId}
+          className="card-link"
+          style={{ color: "orange" }}
+        >
           Edit
         </a>
         <a href="#" className="card-link" style={{ color: "red" }}>

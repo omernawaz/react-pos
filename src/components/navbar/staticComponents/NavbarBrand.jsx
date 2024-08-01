@@ -1,6 +1,6 @@
 const NavbarBrand = ({ imageSource, brandName }) => {
   return (
-    <a className="navbar-brand" href="#">
+    <a className="navbar-brand" href="./home">
       <img
         src={imageSource}
         alt="Logo"

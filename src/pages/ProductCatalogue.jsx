@@ -4,6 +4,7 @@ import LoadingCard from "../components/product-catalogue/LoadingCard";
 import ProductCatalogueControls from "../components/product-catalogue/ProductCatalogueControls";
 import useGetData from "../hooks/useGetData";
 import useRequireLogin from "../hooks/useRequireLogin";
+import ErrorPage from "./ErrorPage";
 
 function filterProducts(productsArray, filterText) {
   let filteredProducts = [];
@@ -33,8 +34,8 @@ const ProductCatalogue = () => {
     setFetchLink(selectedCategory)
   );
 
-  if (error) {
-    throw new Error(error);
+  if (error != null) {
+    return <ErrorPage error={error} />;
   }
 
   let filteredProducts = [];

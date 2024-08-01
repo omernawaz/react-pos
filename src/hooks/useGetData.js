@@ -16,7 +16,7 @@ const useGetData = (url) => {
                 const recievedData = await response.json();
                 setData(recievedData);
             } catch (error) {
-                setError(error);
+                setError({name:error.name, message: error.message});
             } finally {
                 setIsLoading(false);
             }
