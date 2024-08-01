@@ -1,9 +1,8 @@
 import Dropdown from "../generic/Dropdown";
 import SearchBar from "../generic/SearchBar";
-
 import useGetData from "../../hooks/useGetData";
 
-const ProductFilter = ({ onCategoryChange, onSearch }) => {
+const ProductCatalogueControls = ({ onCategoryChange, onSearch }) => {
   const [categories, isLoading] = useGetData(
     "https://fakestoreapi.com/products/categories"
   );
@@ -31,4 +30,4 @@ const ProductFilter = ({ onCategoryChange, onSearch }) => {
   );
 };
 
-export default ProductFilter;
+export default ProductCatalogueControls;

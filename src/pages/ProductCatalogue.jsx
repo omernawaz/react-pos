@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductDisplay from "../components/product-catalogue/ProductsDisplay";
 import LoadingCard from "../components/product-catalogue/LoadingCard";
-import ProductFilter from "../components/product-catalogue/ProductFilter";
+import ProductCatalogueControls from "../components/product-catalogue/ProductCatalogueControls";
 import useGetData from "../hooks/useGetData";
 import useRequireLogin from "../hooks/useRequireLogin";
 
@@ -60,7 +60,7 @@ const ProductCatalogue = () => {
           selectedCategory.substr(1) +
           " Products"}
       </h1>
-      <ProductFilter
+      <ProductCatalogueControls
         onCategoryChange={handleCategoryChange}
         onSearch={handleSearch}
       />

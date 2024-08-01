@@ -2,7 +2,7 @@ import DropdownLink from "./DropdownLink";
 
 const Dropdown = ({ items, onItemChange, children }) => {
   return (
-    <>
+    <div className="align-self-center">
       <a
         className="nav-link dropdown-toggle"
         href="#"
@@ -19,7 +19,7 @@ const Dropdown = ({ items, onItemChange, children }) => {
           </DropdownLink>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

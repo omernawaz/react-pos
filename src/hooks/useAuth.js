@@ -1,4 +1,4 @@
-import { useEffect, useState,useCallback } from "react"
+import { useState,useCallback } from "react"
 
 const useAuth = () => {
     const [data,setData] = useState(null);
@@ -26,15 +26,15 @@ const useAuth = () => {
         const recievedData = await response.json();
         setData(recievedData);
        } catch(error) {
-            setError(error);
+            if(error.name === 'SyntaxError'){
+                setError({name: 'Authorization Error', message: "Invalid Username or Password"});
+            } else if (error.name === "TypeError") {
+                setError({name: 'Server Error', message: "Could not connect to server"});
+            }
        } finally {
         setIsLoading(false);
        }
     }, [])
-
-    useEffect(()=>{
-        handleAuth();
-    },[handleAuth]);
 
 
     return [data,isLoading,error, handleAuth];
