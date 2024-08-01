@@ -1,6 +1,6 @@
 import NavbarLink from "./NavbarLink";
 
-const NavbarDropdown = ({ categories, onClick, children }) => {
+const NavbarDropdown = ({ categories, onCategoryChange, children }) => {
   return (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item dropdown">
@@ -15,7 +15,11 @@ const NavbarDropdown = ({ categories, onClick, children }) => {
         </a>
         <ul className="dropdown-menu">
           {categories.map((category, index) => (
-            <NavbarLink key={index} category={category} onClick={onClick}>
+            <NavbarLink
+              key={index}
+              category={category}
+              onClick={onCategoryChange}
+            >
               {category[0].toUpperCase() + category.substr(1)}
             </NavbarLink>
           ))}
