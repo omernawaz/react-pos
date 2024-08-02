@@ -15,6 +15,7 @@ import Home from "./pages/Home.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import EditProduct from "./pages/EditProduct.jsx";
+import AddProduct from "./pages/AddProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
           },
           {
             path: "add",
-            element: <EditProduct />,
+            element: <AddProduct />,
           },
         ],
       },

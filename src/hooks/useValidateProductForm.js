@@ -21,6 +21,10 @@ const useValidateProductForm = () => {
     const handleValidation = useCallback(async (formData) =>{
         setValidationObj(null);
         let validations = {valid:true, response:{title:'',message:[]}};
+
+
+        //checks for data validation, file type, file size, file dimensions, positive number for price 
+
         const file = (formData.get('imageFile'))
 
         if(isFile(file)) {
@@ -41,12 +45,26 @@ const useValidateProductForm = () => {
             }
         }
 
-
-
-
         if(formData.get('price') <= 0) {
             validations.valid = false;
             validations.response.message.push("Price of product cannot be negative or zero\n");
+        }
+
+        //checks for empty fields
+
+        if(formData.get('price') == 'undefined') {
+            validations.valid = false;
+            validations.response.message.push("Please enter a price\n");
+        }
+
+        if(formData.get('title') == 'undefined') {
+            validations.valid = false;
+            validations.response.message.push("Please enter a name\n");
+        }
+
+        if(formData.get('description') == 'undefined') {
+            validations.valid = false;
+            validations.response.message.push("Please enter a description\n");
         }
         
         if(!validations.valid) {

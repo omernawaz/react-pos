@@ -1,12 +1,33 @@
 import Alert from "../components/generic/Alert";
 import ProductForm from "../components/product-catalogue/ProductForm";
+import LoadingCard from "../components/product-catalogue/LoadingCard";
+import useGetData from "../hooks/useGetData";
+import usePutData from "../hooks/usePutData";
 import useValidateProductForm from "../hooks/useValidateProductForm";
+import { useParams } from "react-router-dom";
 
 const EditProduct = () => {
   const [validationObj, handleValidation] = useValidateProductForm();
+  const { productId } = useParams();
+  const [data, isLoading, error] = useGetData(
+    "https://fakestoreapi.com/products/" + productId
+  );
+
+  const [response, isResponseLoading, responseError, handlePutData] =
+    usePutData();
 
   function handleSubmit(formData) {
     handleValidation(formData);
+    if (validationObj?.valid === true) {
+      handlePutData(
+        "https://fakestoreapi.com/products/" + productId,
+        formData,
+        true
+      );
+    }
+  }
+  if (!isResponseLoading && response) {
+    setTimeout(() => window.location.replace("../catalogue"), 3000);
   }
 
   return (
@@ -19,15 +40,34 @@ const EditProduct = () => {
         />
       ) : null}
 
-      <ProductForm
-        existingValues={{
-          title: "This is a title",
-          description: "This is a description",
-          price: "55.2",
-          image: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-        }}
-        onSubmit={handleSubmit}
-      />
+      {!isLoading && error !== null && (
+        <Alert
+          alertType={"warning"}
+          alertTitle={error.name}
+          alertMessage={[error.message]}
+        />
+      )}
+
+      {!isResponseLoading && responseError && (
+        <Alert
+          alertType={"warning"}
+          alertTitle={responseError.name}
+          alertMessage={[responseError.message]}
+        />
+      )}
+
+      {!isResponseLoading && response && (
+        <Alert
+          alertType={"info"}
+          alertTitle={"Successfully Updated"}
+          alertMessage={["Redirecting in 3 seconds"]}
+        />
+      )}
+      {!isLoading ? (
+        <ProductForm existingValues={data} onSubmit={handleSubmit} />
+      ) : (
+        <LoadingCard />
+      )}
     </>
   );
 };

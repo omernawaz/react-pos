@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
-
+import useGetData from "../../hooks/useGetData";
 const ProductForm = ({ existingValues, onSubmit }) => {
   const [imageFile, setImageFile] = useState();
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   const defaultImage = "https://static.thenounproject.com/png/4595376-200.png";
+
+  const [categories, isLoading] = useGetData(
+    "https://fakestoreapi.com/products/categories"
+  );
+
   useEffect(() => {
     setImageFile(null);
     if (existingValues?.image) {
@@ -20,18 +26,19 @@ const ProductForm = ({ existingValues, onSubmit }) => {
     setTitle(existingValues?.title);
     setPrice(existingValues?.price);
     setDescription(existingValues?.description);
+    setCategory(existingValues?.category);
   }, [existingValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     let formData = new FormData();
-
     formData.append("title", title);
     formData.append("image", image);
     formData.append("imageFile", imageFile);
     formData.append("price", price);
     formData.append("description", description);
+    formData.append("category", category);
 
     onSubmit(formData);
   }
@@ -90,6 +97,7 @@ const ProductForm = ({ existingValues, onSubmit }) => {
                 type="text"
                 className="form-control"
                 id="title"
+                placeholder="Name of the product"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -102,13 +110,32 @@ const ProductForm = ({ existingValues, onSubmit }) => {
                 type="number"
                 className="form-control"
                 id="price"
+                placeholder="Price of product"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
             </div>
-            <div className="col-12 mt-2">
+            <div className="col-md-6 mt-2">
+              <label htmlFor="price" className="form-label">
+                Category
+              </label>
+              <select
+                className="form-select"
+                onChange={(e) => setCategory(e.target.value)}
+                defaultValue={category}
+              >
+                {!isLoading &&
+                  categories &&
+                  categories.map((category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="col-12 mt-2 mb-5">
               <label htmlFor="description" className="form-label">
-                Address
+                Description
               </label>
               <textarea
                 className="form-control"
