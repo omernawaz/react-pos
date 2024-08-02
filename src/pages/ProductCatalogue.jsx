@@ -56,7 +56,7 @@ const ProductCatalogue = () => {
 
   return (
     <>
-      <h1 className="text-center">
+      <h1 className="text-center bg-white">
         {selectedCategory[0].toUpperCase() +
           selectedCategory.substr(1) +
           " Products"}

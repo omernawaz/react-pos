@@ -6,9 +6,11 @@ import usePutData from "../hooks/usePutData";
 import useValidateProductForm from "../hooks/useValidateProductForm";
 import { useParams } from "react-router-dom";
 import useRequireLogin from "../hooks/useRequireLogin";
+import { useState, useEffect } from "react";
 
 const EditProduct = () => {
   useRequireLogin();
+  const [formData, setFormData] = useState();
   const [validationObj, handleValidation] = useValidateProductForm();
   const { productId } = useParams();
   const [data, isLoading, error] = useGetData(
@@ -18,8 +20,7 @@ const EditProduct = () => {
   const [response, isResponseLoading, responseError, handlePutData] =
     usePutData();
 
-  function handleSubmit(formData) {
-    handleValidation(formData);
+  useEffect(() => {
     if (validationObj?.valid === true) {
       handlePutData(
         "https://fakestoreapi.com/products/" + productId,
@@ -27,7 +28,13 @@ const EditProduct = () => {
         true
       );
     }
+  }, [validationObj]);
+
+  function handleSubmit(fromForm) {
+    setFormData(fromForm);
+    handleValidation(fromForm);
   }
+
   if (!isResponseLoading && response) {
     setTimeout(() => window.location.replace("../catalogue"), 3000);
   }

@@ -51,7 +51,7 @@ const ProductForm = ({ existingValues, onSubmit }) => {
   }
 
   return (
-    <div className="container mt-5 p-5 border border-5 border-dark">
+    <div className="container mt-5 p-5 rounded-5 bg-white">
       <h3 className="text-center mb-5">Product Form</h3>
       <form onSubmit={handleSubmit}>
         <div className="row">

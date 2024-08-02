@@ -17,7 +17,7 @@ const ProductCatalogueControls = ({ onCategoryChange, onSearch }) => {
   }
 
   return (
-    <div className="container w-50">
+    <div className="container-fluid bg-white p-2 pe-5 ps-5 rounded-4">
       <div className="d-flex flex-row">
         <Dropdown
           items={isLoading ? [] : categories}

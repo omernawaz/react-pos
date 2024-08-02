@@ -3,19 +3,24 @@ import ProductForm from "../components/product-catalogue/ProductForm";
 import useValidateProductForm from "../hooks/useValidateProductForm";
 import usePutData from "../hooks/usePutData";
 import useRequireLogin from "../hooks/useRequireLogin";
+import { useEffect, useState } from "react";
 
 const AddProduct = () => {
   useRequireLogin();
+  const [formData, setFormData] = useState();
   const [validationObj, handleValidation] = useValidateProductForm();
   const [response, isResponseLoading, responseError, handlePutData] =
     usePutData();
 
-  function handleSubmit(formData) {
-    handleValidation(formData);
-
+  useEffect(() => {
     if (validationObj?.valid === true) {
       handlePutData("https://fakestoreapi.com/products", formData, false);
     }
+  }, [validationObj]);
+
+  function handleSubmit(fromForm) {
+    setFormData(fromForm);
+    handleValidation(fromForm);
   }
 
   if (!isResponseLoading && response) {
