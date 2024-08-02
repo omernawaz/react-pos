@@ -5,7 +5,6 @@ import Alert from "../components/generic/Alert";
 import { useEffect } from "react";
 
 const LoginPage = () => {
-  //useRequireLogin();
   const [handleLogin] = useUserSession();
   const [data, isLoading, error, handleAuth] = useAuth();
 

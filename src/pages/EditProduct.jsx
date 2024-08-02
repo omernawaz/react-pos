@@ -5,8 +5,10 @@ import useGetData from "../hooks/useGetData";
 import usePutData from "../hooks/usePutData";
 import useValidateProductForm from "../hooks/useValidateProductForm";
 import { useParams } from "react-router-dom";
+import useRequireLogin from "../hooks/useRequireLogin";
 
 const EditProduct = () => {
+  useRequireLogin();
   const [validationObj, handleValidation] = useValidateProductForm();
   const { productId } = useParams();
   const [data, isLoading, error] = useGetData(
