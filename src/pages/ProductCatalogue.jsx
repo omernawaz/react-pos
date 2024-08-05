@@ -5,6 +5,8 @@ import ProductCatalogueControls from "../components/product-catalogue/ProductCat
 import useGetData from "../hooks/useGetData";
 import useRequireLogin from "../hooks/useRequireLogin";
 import ErrorPage from "./ErrorPage";
+import usePutData from "../hooks/usePutData";
+import Modal from "../components/generic/Modal";
 
 function filterProducts(productsArray, filterText) {
   let filteredProducts = [];
@@ -29,12 +31,24 @@ const ProductCatalogue = () => {
   //const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterText, setFilterText] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteProductId, setDeleteProductId] = useState(-1);
 
   const [products, isLoading, error, handleFetchData] = useGetData();
+  const [deleteResponse, isDeleteLoading, deleteError, handlePutData] =
+    usePutData();
 
   useEffect(() => {
     handleFetchData(getFetchLink(selectedCategory));
   }, [selectedCategory]);
+
+  useEffect(() => {
+    if (!isDeleteLoading && !deleteError && deleteResponse) {
+      console.log(deleteResponse);
+      setShowDeleteModal(false);
+      setDeleteProductId(-1);
+    }
+  }, [deleteError, deleteResponse, isDeleteLoading]);
 
   if (error != null) {
     return <ErrorPage error={error} />;
@@ -56,8 +70,38 @@ const ProductCatalogue = () => {
     setFilterText(query);
   }
 
+  function handleDeleteModal(productId) {
+    setShowDeleteModal(true);
+    setDeleteProductId(productId);
+  }
+
+  function handleCloseModal() {
+    setShowDeleteModal(false);
+  }
+
+  function handleDelete(productId) {
+    handlePutData(
+      import.meta.env.VITE_FAKEAPI_PRODUCTS + productId,
+      {},
+      "DELETE"
+    );
+  }
+
   return (
     <>
+      {!isLoading && showDeleteModal && (
+        <Modal
+          onClose={handleCloseModal}
+          onConfirm={() => handleDelete(deleteProductId)}
+          modalTriggered={showDeleteModal}
+          buttonType={"danger"}
+          modalTitle={"Attention!"}
+          modalBody={`Are you sure you want to delete: "${
+            products[deleteProductId - 1].title
+          }"`}
+          buttonText="Confirm"
+        />
+      )}
       <h1 className="text-center bg-white">
         {selectedCategory[0].toUpperCase() +
           selectedCategory.substr(1) +
@@ -71,7 +115,10 @@ const ProductCatalogue = () => {
         {isLoading ? (
           <LoadingCard />
         ) : (
-          <ProductDisplay products={filteredProducts} />
+          <ProductDisplay
+            products={filteredProducts}
+            onDelete={handleDeleteModal}
+          />
         )}
       </div>
     </>

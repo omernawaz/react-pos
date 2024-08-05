@@ -29,7 +29,7 @@ const EditProduct = () => {
       handlePutData(
         import.meta.env.VITE_FAKEAPI_PRODUCTS + productId,
         formData,
-        true
+        "PUT"
       );
     }
   }, [validationObj]);

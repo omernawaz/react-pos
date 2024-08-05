@@ -5,13 +5,9 @@ const usePutData =() =>{
     const [isLoading,setIsLoading] = useState();
     const [error, setError] = useState();
 
-    const handlePutData = useCallback(async (url, data, update=false) => {
+    const handlePutData = useCallback(async (url, data, method='POST') => {
         let headers = new Headers();
         headers.set("Content-Type", "application/json");
-        let method = "POST";
-        if(update === true) {
-            method = "PUT";
-        }
         setIsLoading(true);
         setError(null);
         

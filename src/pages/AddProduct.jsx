@@ -14,7 +14,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     if (validationObj?.valid === true) {
-      handlePutData(import.meta.env.VITE_FAKEAPI_PRODUCTS, formData, false);
+      handlePutData(import.meta.env.VITE_FAKEAPI_PRODUCTS, formData);
     }
   }, [validationObj]);
 
