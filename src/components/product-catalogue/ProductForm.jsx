@@ -8,11 +8,12 @@ const ProductForm = ({ existingValues, onSubmit }) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
 
-  const defaultImage = "https://static.thenounproject.com/png/4595376-200.png";
+  const defaultImage = import.meta.env.VITE_DEFAULT_IMAGE;
 
-  const [categories, isLoading] = useGetData(
-    "https://fakestoreapi.com/products/categories"
-  );
+  const [categories, isLoading, , handleFetchData] = useGetData();
+  useEffect(() => {
+    handleFetchData(import.meta.env.VITE_FAKEAPI_CATEGORIES);
+  }, []);
 
   useEffect(() => {
     setImageFile(null);
@@ -39,7 +40,7 @@ const ProductForm = ({ existingValues, onSubmit }) => {
     formData.append("price", price);
     formData.append("description", description);
     formData.append("category", category);
-
+    console.log(category);
     onSubmit(formData);
   }
 
@@ -122,7 +123,7 @@ const ProductForm = ({ existingValues, onSubmit }) => {
               <select
                 className="form-select"
                 onChange={(e) => setCategory(e.target.value)}
-                defaultValue={category}
+                value={!isLoading && category}
               >
                 {!isLoading &&
                   categories &&

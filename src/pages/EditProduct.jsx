@@ -10,12 +10,16 @@ import { useState, useEffect } from "react";
 
 const EditProduct = () => {
   useRequireLogin();
+
   const [formData, setFormData] = useState();
   const [validationObj, handleValidation] = useValidateProductForm();
   const { productId } = useParams();
-  const [data, isLoading, error] = useGetData(
-    "https://fakestoreapi.com/products/" + productId
-  );
+
+  const [data, isLoading, error, handleFetchData] = useGetData();
+
+  useEffect(() => {
+    handleFetchData(import.meta.env.VITE_FAKEAPI_PRODUCTS + productId);
+  }, [productId]);
 
   const [response, isResponseLoading, responseError, handlePutData] =
     usePutData();
@@ -23,7 +27,7 @@ const EditProduct = () => {
   useEffect(() => {
     if (validationObj?.valid === true) {
       handlePutData(
-        "https://fakestoreapi.com/products/" + productId,
+        import.meta.env.VITE_FAKEAPI_PRODUCTS + productId,
         formData,
         true
       );

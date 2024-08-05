@@ -5,7 +5,7 @@ const useAuth = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const url = "https://fakestoreapi.com/auth/login";
+    const url = import.meta.env.VITE_FAKEAPI_AUTH;
 
     const handleAuth = useCallback(async (formData) => {
 

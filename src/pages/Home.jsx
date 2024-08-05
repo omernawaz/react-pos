@@ -1,5 +1,4 @@
 import useRequireLogin from "../hooks/useRequireLogin";
-
 function Home() {
   useRequireLogin();
   return (

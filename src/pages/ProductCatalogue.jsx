@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductDisplay from "../components/product-catalogue/ProductsDisplay";
 import LoadingCard from "../components/product-catalogue/LoadingCard";
 import ProductCatalogueControls from "../components/product-catalogue/ProductCatalogueControls";
@@ -16,10 +16,10 @@ function filterProducts(productsArray, filterText) {
   return filteredProducts;
 }
 
-function setFetchLink(selectedCategory) {
-  let fetchLink = "https://fakestoreapi.com/products";
+function getFetchLink(selectedCategory) {
+  let fetchLink = import.meta.env.VITE_FAKEAPI_PRODUCTS;
   if (selectedCategory != "all") {
-    fetchLink += "/category/" + selectedCategory;
+    fetchLink += "category/" + selectedCategory;
   }
   return fetchLink;
 }
@@ -30,9 +30,11 @@ const ProductCatalogue = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterText, setFilterText] = useState("");
 
-  const [products, isLoading, error] = useGetData(
-    setFetchLink(selectedCategory)
-  );
+  const [products, isLoading, error, handleFetchData] = useGetData();
+
+  useEffect(() => {
+    handleFetchData(getFetchLink(selectedCategory));
+  }, [selectedCategory]);
 
   if (error != null) {
     return <ErrorPage error={error} />;
