@@ -1,4 +1,4 @@
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, productId, onDelete }) => {
   const truncatedDiscription = product.description.substr(0, 100) + "...";
 
   return (
@@ -23,12 +23,19 @@ const ProductCard = ({ product }) => {
       </ul>
 
       <div className="card-body text-center">
-        <a href="#" className="card-link" style={{ color: "orange" }}>
+        <button
+          className="btn btn-warning m-1"
+          onClick={() => window.location.replace("./edit/" + productId)}
+        >
           Edit
-        </a>
-        <a href="#" className="card-link" style={{ color: "red" }}>
+        </button>
+        <button
+          href="#"
+          className="btn btn-danger m-1"
+          onClick={() => onDelete(productId)}
+        >
           Delete
-        </a>
+        </button>
       </div>
     </div>
   );

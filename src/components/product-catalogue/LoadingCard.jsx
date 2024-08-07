@@ -4,7 +4,7 @@ const LoadingCard = () => {
       className="card p-3 m-3 align-self-center text-center"
       style={{ width: "72rem" }}
     >
-      Loading Products...
+      Loading...
     </div>
   );
 };

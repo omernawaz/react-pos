@@ -1,24 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log("Handling Submit: " + query);
+  const handleSearch = () => {
     let formData = new FormData();
     formData.append("query", query);
     onSearch(formData);
-  }
+  };
 
-  function handleChange(e) {
-    console.log("Handling Change: " + e.target.value);
-    setQuery(e.target.value);
-    console.log("Handling Change(Query Set To): " + query);
-
-    if (e.target.value === "") {
-      handleSubmit(e);
+  useEffect(() => {
+    if (query === "") {
+      handleSearch();
     }
+  }, [query]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleSearch();
   }
 
   return (
@@ -32,7 +31,8 @@ const SearchBar = ({ onSearch }) => {
         type="search"
         placeholder="Search Catalogue"
         aria-label="Search"
-        onChange={handleChange}
+        onChange={(e) => setQuery(e.target.value)}
+        value={query}
       />
       <button className="btn btn-outline-success" type="submit">
         Search
